@@ -2,26 +2,42 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofBackground(255,255,255);
+    ofBackground(0,0,0);
+    ofEnableDepthTest();
+    baseNode.setPosition(0,0,0);
+    childNode.setParent(baseNode);
+    childNode.setPosition(0, 0, 200);
+    grandChildNode.setParent(childNode);
+    grandChildNode.setPosition(0, 50, 0);
     
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    for(auto &vert : line.getVertices()) {
-        vert.x += ofRandom(-1,1);
-        vert.y += ofRandom(-1,1);
+    baseNode.panDeg(1);
+    childNode.tiltDeg(3);
+    
+    line.addVertex(grandChildNode.getGlobalPosition());
+    if(line.size() > 500) {
+        line.getVertices().erase(line.getVertices().begin());
+    }
+    if(mouseInFrame) {
+        for (auto &vert : line.getVertices()){
+            vert.x += ofRandom(-1,1);
+            vert.y += ofRandom(-1,1);
+            vert.z += ofRandom(-1,1);
+        }
+        ofSetColor(ofRandom(0,255), ofRandom(0,255), ofRandom(0,255));
+    } else {
+        ofSetColor(255,255,255);
     }
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    cam.begin();
     line.draw();
-    ofEnableAlphaBlending();
-    ofSetColor(30,30,30,30);
-    for(auto line : lines){
-        ofDrawLine(line.a, line.b);
-    }
+    cam.end();
 }
 
 //--------------------------------------------------------------
@@ -41,23 +57,11 @@ void ofApp::mouseMoved(int x, int y ){
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-    for(auto point: drawnPoints) { //test
-        ofPoint mouse;
-        mouse.set(x,y);
-        float dist = (mouse-point).length();
-        if (dist < 30) {
-            Line lineTemp;
-            lineTemp.a = mouse;
-            lineTemp.b = point;
-            lines.push_back(lineTemp);
-        }
-    }
-    drawnPoints.push_back(ofPoint(x,y));
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-    line.clear();
 }
 
 //--------------------------------------------------------------
@@ -67,12 +71,12 @@ void ofApp::mouseReleased(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mouseEntered(int x, int y){
-
+    mouseInFrame = true;
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseExited(int x, int y){
-
+    mouseInFrame = false;
 }
 
 //--------------------------------------------------------------

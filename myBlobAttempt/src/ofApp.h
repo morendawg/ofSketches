@@ -2,13 +2,6 @@
 
 #include "ofMain.h"
 
-class Line {
-public:
-    ofPoint a;
-    ofPoint b;
-};
-
-
 class ofApp : public ofBaseApp{
 
 	public:
@@ -27,8 +20,11 @@ class ofApp : public ofBaseApp{
         void windowResized(int w, int h);
         void dragEvent(ofDragInfo dragInfo);
         void gotMessage(ofMessage msg);
+        ofNode baseNode;
+        ofNode childNode;
+        ofNode grandChildNode;
         ofPolyline line;
-    vector<ofPoint> drawnPoints;
-    vector<Line> lines;
+        ofEasyCam cam;
+        bool mouseInFrame;
 		
 };
