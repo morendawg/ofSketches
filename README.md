@@ -1,1 +1,2 @@
- # ofSketches by morendawg
+ # ofSketches
+ Inspired by Zach Lieberman
