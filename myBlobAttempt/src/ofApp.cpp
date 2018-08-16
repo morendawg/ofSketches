@@ -41,7 +41,7 @@ void ofApp::mouseMoved(int x, int y ){
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-    for(auto point: drawnPoints) {
+    for(auto point: drawnPoints) { //test
         ofPoint mouse;
         mouse.set(x,y);
         float dist = (mouse-point).length();
